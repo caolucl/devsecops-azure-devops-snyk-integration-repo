@@ -20,7 +20,7 @@ steps:
 - script: |
     SNYK_TOKEN=$(snyk_token)
     export SNYK_TOKEN
-    snyk $SNYK_TOKEN
+    snyk auth $SNYK_TOKEN
     #mvn -X snyk:test -fn 
     snyk test
   displayName: "Integrate SCA scan using Snyk in ADO DevSecOps Pipeline"
