@@ -21,6 +21,8 @@ steps:
 
 - script: |
     SNYK_TOKEN='6e89be83-fcc3-4bf8-9954-622c6f759b87'
+    #SNYK_TOKEN=$(snyk_token)
     export SNYK_TOKEN
-    mvn snyk:test 
+    snyk auth $SNYK_TOKEN
+    snyk test
   displayName: "SCA Scan Azure DevOps App"
