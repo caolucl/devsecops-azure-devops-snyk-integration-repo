@@ -26,7 +26,8 @@ steps:
   displayName: "Testing Azure DevOps App"
 
 - script: |
-    SNYK_TOKEN='6e89be83-fcc3-4bf8-9954-622c6f759b87'
+    #SNYK_TOKEN='6e89be83-fcc3-4bf8-9954-622c6f759b87'
+    SNYK_TOKEN=${snyk_token}
     /usr/local/bin/snyk auth $SNYK_TOKEN
     /usr/local/bin/snyk test
     exit 0
