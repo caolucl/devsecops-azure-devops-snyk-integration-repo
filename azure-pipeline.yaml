@@ -19,7 +19,7 @@ steps:
       sudo mv snyk /usr/local/bin/snyk
 - script: |
     SNYK_TOKEN=$(snyk_token)
-    export SNYK_TOKEN
+    export $SNYK_TOKEN
     snyk auth $SNYK_TOKEN
     snyk test
   displayName: "Integrate SCA scan using Snyk in ADO DevSecOps Pipeline"
