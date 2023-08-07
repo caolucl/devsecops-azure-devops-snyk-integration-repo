@@ -12,6 +12,11 @@ variables:
 
 steps:
 - script: |
+    curl -L https://github.com/snyk/snyk/releases/download/v1.1200.0/snyk-linux -o snyk
+    chmod +x snyk
+    sudo mv snyk /usr/local/bin/snyk
+     displayName: "Install snyk"
+- script: |
     mvn clean package
   displayName: "Building Azure DevOps App"
 
