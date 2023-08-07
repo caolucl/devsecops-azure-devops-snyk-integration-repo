@@ -25,6 +25,10 @@ steps:
     mvn clean test
   displayName: "Testing Azure DevOps App"
 
+#- script: |
+#    mvn verify package sonar:sonar -Dsonar.host.url=https://sonarcloud.io/ -Dsonar.organization=azuredevopsdevsecopsorg -Dsonar.projectKey=azuredevopsdevsecopsprojectkey -Dsonar.login=$(sonar_token)
+#  displayName: "Integrate SAST using SonarCloud to populate code coverage and secure pipeline variable in Azure DevOps DevSecOps Pipeline"
+
 - script: |
     #SNYK_TOKEN='6e89be83-fcc3-4bf8-9954-622c6f759b87'
     SNYK_TOKEN=${snyk_token}
