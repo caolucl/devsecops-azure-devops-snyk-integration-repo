@@ -1,19 +1,45 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
-- main
+- master
 
 pool:
   vmImage: ubuntu-latest
 
+variables:
+- group: "SECURE_TOKENS"
+- name: snyk_token
+  value: $[variables.SNYKTOKEN]
+
+
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+- script: |
+    curl -L https://github.com/snyk/snyk/releases/download/v1.1200.0/snyk-linux -o snyk
+    chmod +x snyk
+    sudo mv snyk /usr/local/bin/snyk
+  displayName: "Install snyk"
+  
+- script: |
+    mvn clean package
+  displayName: "Building Azure DevOps App"
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    mvn clean test
+  displayName: "Testing Azure DevOps App"
+
+- script: |
+    SNYK_TOKEN='6e89be83-fcc3-4bf8-9954-622c6f759b87'
+    /usr/local/bin/snyk auth $SNYK_TOKEN
+    /usr/local/bin/snyk test
+    exit 0
+  displayName: "SCA Scan Azure DevOps App"
+  
+- script: |
+      wget https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
+      tar -xvf ZAP_2.11.1_Linux.tar.gz
+      cd ZAP_2.11.1
+      ./zap.sh -cmd -quickurl https://www.example.com -quickprogress -quickout /home/vsts/work/1/a/zap_report.html 
+  displayName: "DAST Scan Azure DevOps App"
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: '$(Build.ArtifactStagingDirectory)'
+    artifactName: zap_report.html
