@@ -9,9 +9,18 @@ variables:
 - name: snyk_token
   value: $[variables.SNYKTOKEN]
 
+
 steps:
 - script: |
-    SNYK_TOKEN=$(snyk_token)
+    mvn clean package
+  displayName: "Building Azure DevOps App"
+
+- script: |
+    mvn clean test
+  displayName: "Testing Azure DevOps App"
+
+- script: |
+    SNYK_TOKEN='6e89be83-fcc3-4bf8-9954-622c6f759b87'
     export SNYK_TOKEN
-    mvn snyk:test -fn 
-  displayName: "Integrate SCA scan using Snyk in ADO DevSecOps Pipeline"
+    mvn snyk:test 
+  displayName: "SCA Scan Azure DevOps App"
