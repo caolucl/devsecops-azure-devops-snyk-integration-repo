@@ -52,21 +52,26 @@ steps:
 #    image: 'nginx:latest'
 #    severities: 'CRITICAL,HIGH'
 #    exitCode: '0'
-- task: CmdLine@2
-  displayName: "Download and install Trivy"
+
+
+- task: Bash@3
+  displayName: Download and install trivy
   inputs:
+    targetType: 'inline'
     script: |
       trivyVersion=0.44.1
       sudo apt-get install rpm
       wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
-        sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
-        trivy -v  
+      sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
+      trivy -v 
 
-- task: CmdLine@2
-  displayName: Scan
+- task: Bash@3
+  displayName: Scan image
   inputs:
+    targetType: 'inline'
     script: |
         trivy image  nginx:latest
+
 - script: |
       wget https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
       tar -xvf ZAP_2.11.1_Linux.tar.gz
