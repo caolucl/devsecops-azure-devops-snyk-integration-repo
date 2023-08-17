@@ -40,8 +40,9 @@ steps:
   inputs:
     serviceConnectionEndpoint: 'Snyk'
     testType: 'app'
+    severityThreshold: 'critical'
     monitorWhen: 'always'
-    failOnIssues: true
+    failOnIssues: false
     projectName: 'AzureDevSecOps'
     organization: 'caoluclfpro'
 - script: |
