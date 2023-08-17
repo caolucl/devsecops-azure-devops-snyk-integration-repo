@@ -56,7 +56,7 @@ steps:
   displayName: "Download and install Trivy"
   inputs:
     script: |
-      trivyVersion="0.44.1"
+      trivyVersion=0.44.1
       sudo apt-get install rpm
       wget https://github.com/aquasecurity/trivy/releases/download/v$(trivyVersion)/trivy_$(trivyVersion)_Linux-64bit.deb
         sudo dpkg -i trivy_$(trivyVersion)_Linux-64bit.deb
