@@ -45,6 +45,13 @@ steps:
     failOnIssues: false
     projectName: 'AzureDevSecOps'
     organization: 'caoluclfpro'
+- task: trivy@1
+  inputs:
+    version: 'latest'
+    debug: true
+    image: 'nginx:latest'
+    severities: 'CRITICAL,HIGH'
+    exitCode: '0'
 - script: |
       wget https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
       tar -xvf ZAP_2.11.1_Linux.tar.gz
