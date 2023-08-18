@@ -71,7 +71,7 @@ steps:
     targetType: 'inline'
     script: |
       #trivy image  nginx:latest
-      trivy image  --exit-code 0 --severity MEDIUM,HIGH,CRITICAL --format template --template Junit.tpl -o junit-report.xml nginx:latest
+      trivy image  --format template --template "@./Junit.tpl" -o junit-report.xml nginx:latest
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
 - task: PublishTestResults@2
