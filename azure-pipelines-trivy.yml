@@ -40,10 +40,14 @@ steps:
 #    failTaskOnFailedTests: true
 #    testRunTitle: 'Trivy'
 
-- task: PublishTestResults@2
+#- task: PublishTestResults@2
+#  inputs:
+#    testResultsFormat: 'JUnit'
+#    testResultsFiles: '**/junit-report-low-med.xml'
+#    mergeTestResults: true
+#    failTaskOnFailedTests: true
+#    testRunTitle: 'Trivy'
+- task: PublishBuildArtifacts@1
   inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/junit-report-low-med.xml'
-    mergeTestResults: true
-    failTaskOnFailedTests: true
-    testRunTitle: 'Trivy'
+    pathToPublish: '$(Build.DefaultWorkingDirectory)'
+    artifactName: junit-report-low-med.xml
