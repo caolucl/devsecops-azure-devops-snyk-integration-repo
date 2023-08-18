@@ -70,7 +70,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-        trivy image  nginx:latest
+        #trivy image  nginx:latest
+        trivy image  --exit-code 1 --severity CRITICAL --format template --template "@$(System.DefaultWorkingDirectory)/Junit.tpl" -o junit-report.xml nginx:latest
+- task: PublishTestResults@2
+  inputs:
+    testResultsFormat: 'JUnit'
+    testResultsFiles: '**/junit-*.xml'
+    failTaskOnFailedTests: true
+    mergeTestResults: true
+    testRunTitle: 'Trivy'
 
 - script: |
       wget https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
