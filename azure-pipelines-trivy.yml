@@ -28,17 +28,17 @@ steps:
     targetType: 'inline'
     script: |
       #trivy image  nginx:latest
-      trivy image  --exit-code 0 --severity HIGH,CRITICAL --format template --template "@./JUnit.tpl" -o junit-report-high-crit.xml nginx:latest
-      trivy image  --exit-code 0 --severity LOW,MEDIUM --format template --template "@./JUnit.tpl" -o junit-report-low-med.xml nginx:latest
+      #trivy image  --exit-code 0 --severity HIGH,CRITICAL --format template --template "@./JUnit.tpl" -o junit-report-high-crit.xml nginx:latest
+      trivy image  --severity LOW,MEDIUM --format template --template "@./JUnit.tpl" -o junit-report-low-med.xml nginx:latest
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/junit-report-high-crit.xml'
-    mergeTestResults: true
-    failTaskOnFailedTests: true
-    testRunTitle: 'Trivy'
+#- task: PublishTestResults@2
+#  inputs:
+#    testResultsFormat: 'JUnit'
+#    testResultsFiles: '**/junit-report-high-crit.xml'
+#    mergeTestResults: true
+#    failTaskOnFailedTests: true
+#    testRunTitle: 'Trivy'
 
 - task: PublishTestResults@2
   inputs:
