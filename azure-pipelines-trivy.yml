@@ -50,6 +50,7 @@ steps:
 - task: PublishBuildArtifacts@1
 
   inputs:
-    PathtoPublish: 
-    ArtifactName: 'junit-report-low-med.xml'
+    PathtoPublish: '$(System.DefaultWorkingDirectory)/junit-report-low-med.xml'
+    ArtifactName: 'junit-report'
     publishLocation: 'Container'
+    
