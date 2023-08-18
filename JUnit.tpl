@@ -9,7 +9,7 @@
         </properties>
         {{- end -}}
         {{ range .Vulnerabilities }}
-        <testcase classname="{{ .PkgName }}-{{ .InstalledVersion }}" name="[{{  .Target }}] [{{ .Vulnerability.Severity }}] {{ .VulnerabilityID }}" time="">
+        <testcase classname="{{ .PkgName }}-{{ .InstalledVersion }}" name="[{{ .Vulnerability.Severity }}] {{ .VulnerabilityID }}" time="">
             <failure message={{escapeXML .Title | printf "%q" }} type="description">{{escapeXML .Description | printf "%q" }}</failure>
         </testcase>
     {{- end }}
