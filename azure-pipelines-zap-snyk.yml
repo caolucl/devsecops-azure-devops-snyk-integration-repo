@@ -70,14 +70,15 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-        #trivy image  nginx:latest
-        trivy image  --exit-code 1 --severity CRITICAL --format template --template "@$(System.DefaultWorkingDirectory)/Junit.tpl" -o junit-report.xml nginx:latest
+      #trivy image  nginx:latest
+      trivy image  --exit-code 1 --severity CRITICAL --format template --template Junit.tpl -o junit-report.xml nginx:latest
+    workingDirectory: '$(System.DefaultWorkingDirectory)'
 - task: PublishTestResults@2
   inputs:
     testResultsFormat: 'JUnit'
     testResultsFiles: '**/junit-*.xml'
-    failTaskOnFailedTests: true
     mergeTestResults: true
+    failTaskOnFailedTests: true
     testRunTitle: 'Trivy'
 
 - script: |
