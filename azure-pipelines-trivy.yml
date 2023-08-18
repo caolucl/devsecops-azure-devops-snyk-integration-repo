@@ -48,6 +48,8 @@ steps:
 #    failTaskOnFailedTests: true
 #    testRunTitle: 'Trivy'
 - task: PublishBuildArtifacts@1
+
   inputs:
-    pathToPublish: '$(Build.DefaultWorkingDirectory)'
-    artifactName: junit-report-low-med.xml
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'junit-report-low-med.xml'
+    publishLocation: 'Container'
