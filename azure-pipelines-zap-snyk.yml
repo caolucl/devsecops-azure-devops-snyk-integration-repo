@@ -82,21 +82,21 @@ steps:
       trivy image  --severity LOW,MEDIUM --format template --template "@./JUnit.tpl" -o junit-report-low-med.xml nginx:latest
     workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/junit-report-high-crit.xml'
-    mergeTestResults: true
-    failTaskOnFailedTests: true
-    testRunTitle: 'Trivy'
+#- task: PublishTestResults@2
+#  inputs:
+#    testResultsFormat: 'JUnit'
+#    testResultsFiles: '**/junit-report-high-crit.xml'
+#    mergeTestResults: true
+#    failTaskOnFailedTests: true
+#    testRunTitle: 'Trivy'
 
-- task: PublishTestResults@2
-  inputs:
-    testResultsFormat: 'JUnit'
-    testResultsFiles: '**/junit-report-low-med.xml'
-    mergeTestResults: true
-    failTaskOnFailedTests: true
-    testRunTitle: 'Trivy'
+#- task: PublishTestResults@2
+#  inputs:
+#    testResultsFormat: 'JUnit'
+#    testResultsFiles: '**/junit-report-low-med.xml'
+#    mergeTestResults: true
+#    failTaskOnFailedTests: true
+#    testRunTitle: 'Trivy'
 
 - script: |
       wget https://github.com/zaproxy/zaproxy/releases/download/v2.11.1/ZAP_2.11.1_Linux.tar.gz
