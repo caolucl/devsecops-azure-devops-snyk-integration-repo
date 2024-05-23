@@ -59,11 +59,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: |
-      trivyVersion='0.44.1'
-      sudo apt-get install rpm
-      wget https://github.com/aquasecurity/trivy/releases/download/v${trivyVersion}/trivy_${trivyVersion}_Linux-64bit.deb
-      sudo dpkg -i trivy_${trivyVersion}_Linux-64bit.deb
-      trivy -v 
+      #trivyVersion='0.44.1'
+      #sudo apt-get install rpm
+      #wget https://github.com/aquasecurity/trivy/releases/download/v${trivyVersion}/trivy_${trivyVersion}_Linux-64bit.deb
+      #sudo dpkg -i trivy_${trivyVersion}_Linux-64bit.deb
+      #trivy -v 
+      curl -sfL https://raw.githubusercontent.com/aquasecurity/trivy/main/contrib/install.sh | sh -s -- -b /usr/local/bin
+      trivy -v
 
 - task: Bash@3
   displayName: Scan image
@@ -81,6 +83,16 @@ steps:
       #trivy image  nginx:latest
       trivy image  --severity LOW,MEDIUM --format template --template "@./JUnit.tpl" -o junit-report-low-med.xml nginx:latest
     workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+- script: |
+        echo Running Trivy Scan...
+        trivy image --format template --template "@trivy-reports.tpl" --output "$(Build.ArtifactStagingDirectory)/trivy-report.html" nginx:latest
+  displayName: 'Run Trivy Scan'
+
+- task: PublishPipelineArtifact@1
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/trivy-report.html'
+    artifact: 'TrivyReport'
 
 #- task: PublishTestResults@2
 #  inputs:
